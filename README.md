@@ -1,4 +1,3 @@
-
 # HappyFlights - Flight Booking System
 
 A full-stack flight booking application with user authentication, flight search, seat selection, and payment processing.
