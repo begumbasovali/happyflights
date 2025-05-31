@@ -53,7 +53,7 @@ function handleUserLogin(e) {
     .then((data) => {
       // Store user token
       localStorage.setItem("userToken", data.token);
-      
+
       // Show success message
       showSuccess("Login successful! Redirecting...");
       
@@ -125,7 +125,7 @@ function handleUserRegister(e) {
       
       // Redirect to home page
       setTimeout(() => {
-        window.location.href = "/";
+      window.location.href = "/";
       }, 1500);
     })
     .catch((error) => {
