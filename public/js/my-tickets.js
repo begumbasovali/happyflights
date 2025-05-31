@@ -128,10 +128,103 @@ function createTicketCard(ticket) {
   const col = document.createElement("div");
   col.className = "col-md-6 col-lg-4";
   
-  // Format dates
-  const departureDate = new Date(ticket.flight.departure_time).toLocaleDateString();
-  const departureTime = new Date(ticket.flight.departure_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-  const arrivalTime = new Date(ticket.flight.arrival_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+  // Check if flight data exists (flight might be deleted/cancelled)
+  if (!ticket.flight) {
+    console.log('Flight data is missing for ticket - likely a cancelled flight:', ticket);
+    
+    // Use flight details stored in the ticket if available
+    const fromCity = ticket.flight_from || 'Bilinmiyor';
+    const toCity = ticket.flight_to || 'Bilinmiyor';
+    const departureTime = ticket.flight_departure_time ? 
+      new Date(ticket.flight_departure_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Bilinmiyor';
+    const arrivalTime = ticket.flight_arrival_time ? 
+      new Date(ticket.flight_arrival_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Bilinmiyor';
+    const departureDate = ticket.flight_departure_time ? 
+      new Date(ticket.flight_departure_time).toLocaleDateString() : 'Bilinmiyor';
+    const flightPrice = ticket.flight_price || ticket.price || 'Bilinmiyor';
+    
+    // Create a card showing cancelled flight state
+    col.innerHTML = `
+      <div class="card h-100 shadow-sm border-danger">
+        <div class="card-header bg-danger text-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <h6 class="mb-0">
+              <i class="fas fa-plane"></i> ${ticket.flight_id || 'Unknown'}
+            </h6>
+            <span class="badge bg-dark">
+              ❌ FLIGHT CANCELLED
+            </span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="alert alert-danger mb-3">
+            <i class="fas fa-ban"></i> 
+            <strong>This flight has been cancelled</strong><br>
+            <small>Please contact customer service for assistance</small>
+          </div>
+          
+          <div class="route mb-3">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="text-center">
+                <h6 class="mb-0 text-muted">${fromCity}</h6>
+                <small class="text-muted">${departureTime}</small>
+              </div>
+              <div class="text-center">
+                <i class="fas fa-arrow-right text-muted"></i>
+              </div>
+              <div class="text-center">
+                <h6 class="mb-0 text-muted">${toCity}</h6>
+                <small class="text-muted">${arrivalTime}</small>
+              </div>
+            </div>
+          </div>
+          
+          <div class="ticket-details">
+            <div class="row text-sm">
+              <div class="col-6">
+                <strong>Date:</strong><br>
+                <span class="text-muted">${departureDate}</span>
+              </div>
+              <div class="col-6">
+                <strong>Seat:</strong><br>
+                <span class="text-muted">${ticket.seat_number || 'Unknown'}</span>
+              </div>
+              <div class="col-6 mt-2">
+                <strong>Passenger:</strong><br>
+                <span class="text-muted">${ticket.passenger_name || 'Unknown'}</span>
+              </div>
+              <div class="col-6 mt-2">
+                <strong>Status:</strong><br>
+                <span class="text-danger">Cancelled</span>
+              </div>
+              <div class="col-12 mt-2">
+                <strong>Price:</strong><br>
+                <span class="text-muted text-decoration-line-through">₺${flightPrice}</span><br>
+                <small class="text-success">Refund will be processed</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer bg-light text-muted">
+          <small class="text-muted">
+            <i class="fas fa-envelope"></i> ${ticket.email || ticket.passenger_email || 'Unknown'}
+          </small>
+          <span class="float-end text-muted small">
+            <i class="fas fa-info-circle"></i> Contact customer service
+          </span>
+        </div>
+      </div>
+    `;
+    return col;
+  }
+  
+  // Format dates with null checks
+  const departureDate = ticket.flight.departure_time ? 
+    new Date(ticket.flight.departure_time).toLocaleDateString() : 'Unknown';
+  const departureTime = ticket.flight.departure_time ? 
+    new Date(ticket.flight.departure_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Unknown';
+  const arrivalTime = ticket.flight.arrival_time ? 
+    new Date(ticket.flight.arrival_time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Unknown';
   
   // Status color mapping
   const statusColors = {
@@ -156,7 +249,7 @@ function createTicketCard(ticket) {
       <div class="card-header ${isCancelled ? 'bg-danger text-white' : 'bg-light'}">
         <div class="d-flex justify-content-between align-items-center">
           <h6 class="mb-0">
-            <i class="fas fa-plane"></i> ${ticket.flight.flight_id}
+            <i class="fas fa-plane"></i> ${ticket.flight.flight_id || 'Unknown'}
           </h6>
           <span class="badge bg-${statusColor}">
             ${isCancelled ? '❌ CANCELLED' : ticket.status.charAt(0).toUpperCase() + ticket.status.slice(1)}

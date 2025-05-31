@@ -49,6 +49,12 @@ router.post("/", async (req, res) => {
       passenger_email,
       flight_id,
       seat_number,
+      // Store flight details for future reference (even if flight gets deleted)
+      flight_from: flight.from || flight.from_city,
+      flight_to: flight.to || flight.to_city,
+      flight_departure_time: flight.departure_time,
+      flight_arrival_time: flight.arrival_time,
+      flight_price: flight.price,
     });
 
     console.log("💾 Saving new ticket...");

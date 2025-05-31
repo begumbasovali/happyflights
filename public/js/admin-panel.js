@@ -41,6 +41,12 @@ document.addEventListener("DOMContentLoaded", function () {
   if (confirmDeleteBtn) {
     confirmDeleteBtn.addEventListener("click", deleteFlight);
   }
+
+  // Set up migrate tickets button
+  const migrateTicketsBtn = document.getElementById("migrate-tickets-btn");
+  if (migrateTicketsBtn) {
+    migrateTicketsBtn.addEventListener("click", migrateExistingTickets);
+  }
 });
 
 // Manual tab switching functionality for admin panel
@@ -707,21 +713,30 @@ function displayTicketBookings(tickets) {
     
     const row = document.createElement("tr");
     
-    // Extract flight details with fallback handling
+    // Extract flight details with fallback to ticket stored data
     const flightDetails = ticket.flight_details;
     console.log(`🎫 Flight details for ticket ${ticket.ticket_id}:`, flightDetails);
     
-    // Handle route with multiple possible field names
+    // Handle route with multiple possible field names and fallback to ticket data
     let route = "N/A";
+    let departureTime = "N/A";
+    let price = "N/A";
+    
     if (flightDetails) {
+      // Flight still exists - use flight details
       const fromCity = flightDetails.from || flightDetails.from_city || "Unknown";
       const toCity = flightDetails.to || flightDetails.to_city || "Unknown";
       route = `${fromCity} → ${toCity}`;
-      console.log(`🎫 Route calculated: ${route}`);
+      departureTime = formatDate(flightDetails.departure_time);
+      price = formatPrice(flightDetails.price);
+      console.log(`🎫 Route from flight details: ${route}`);
+    } else if (ticket.flight_from && ticket.flight_to) {
+      // Flight deleted but ticket has stored details - use ticket data
+      route = `${ticket.flight_from} → ${ticket.flight_to}`;
+      departureTime = ticket.flight_departure_time ? formatDate(ticket.flight_departure_time) : "N/A";
+      price = ticket.flight_price ? formatPrice(ticket.flight_price) : "N/A";
+      console.log(`🎫 Route from ticket stored data: ${route}`);
     }
-    
-    const departureTime = flightDetails ? formatDate(flightDetails.departure_time) : "N/A";
-    const price = flightDetails ? formatPrice(flightDetails.price) : "N/A";
     
     // Status badge with colors
     const status = ticket.status || 'confirmed';
@@ -731,6 +746,10 @@ function displayTicketBookings(tickets) {
     // Cancellation info
     const cancellationReason = ticket.cancellation_reason || '';
     const cancelledDate = ticket.cancelled_at ? formatDate(ticket.cancelled_at) : '';
+    
+    // Flight status indicator (if flight doesn't exist)
+    const flightStatusIndicator = !flightDetails ? 
+      ' <span class="badge bg-warning text-dark ms-1" title="Flight has been deleted">DELETED</span>' : '';
     
     row.innerHTML = `
       <td>
@@ -745,7 +764,7 @@ function displayTicketBookings(tickets) {
         </a>
       </td>
       <td>
-        <span class="badge bg-info">${ticket.flight_id}</span>
+        <span class="badge bg-info">${ticket.flight_id}</span>${flightStatusIndicator}
       </td>
       <td>${route}</td>
       <td>${departureTime}</td>
@@ -778,6 +797,54 @@ function displayTicketBookings(tickets) {
   });
   
   console.log("🎫 Ticket display completed successfully");
+}
+
+// Migrate existing tickets with flight details
+function migrateExistingTickets() {
+  const adminToken = localStorage.getItem("adminToken");
+  
+  // Show confirmation
+  if (!confirm("This will update all existing tickets with flight details. Continue?")) {
+    return;
+  }
+  
+  // Show loading state
+  const btn = document.getElementById("migrate-tickets-btn");
+  const originalText = btn.innerHTML;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+  btn.disabled = true;
+  
+  fetch("/api/admin/update-tickets", {
+    method: "POST",
+    headers: {
+      "x-auth-token": adminToken,
+      "Content-Type": "application/json"
+    }
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to update tickets");
+      }
+      return response.json();
+    })
+    .then((result) => {
+      console.log("Migration result:", result);
+      
+      // Show success message
+      showToast(`Migration completed! Updated: ${result.updated}, Failed: ${result.failed}`, "success");
+      
+      // Reload tickets to show updated data
+      loadTicketBookings();
+    })
+    .catch((error) => {
+      console.error("Migration error:", error);
+      showToast("Error updating tickets: " + error.message, "danger");
+    })
+    .finally(() => {
+      // Restore button
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+    });
 }
 
 // Format date helper (if not already defined)
