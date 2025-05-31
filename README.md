@@ -1,6 +1,3 @@
-# happyflights
-
-https://github.com/begumbasovali/happyflights
 
 # HappyFlights - Flight Booking System
 
@@ -230,4 +227,3 @@ Created as a demonstration project for Full Stack Development Final Assignment.
 **Author**: Student Project  
 **Course**: Web Development  
 **Framework**: MEAN Stack (MongoDB, Express.js, Angular-style frontend, Node.js)
-

@@ -1,0 +1,263 @@
+/* Global styles */
+:root {
+  --primary-color: #0d6efd;
+  --secondary-color: #6c757d;
+  --success-color: #198754;
+  --danger-color: #dc3545;
+  --light-color: #f8f9fa;
+  --dark-color: #212529;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/img/flight.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1;
+}
+
+/* Card styles */
+.card {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-header {
+  font-weight: 600;
+}
+
+/* Flight cards */
+.flight-card {
+  transition: transform 0.2s;
+}
+
+.flight-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.flight-price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+/* Hero section */
+.hero {
+  background: linear-gradient(135deg, var(--primary-color), #0a58ca);
+  border-radius: 0 0 2rem 2rem;
+  margin-top: -1.5rem;
+}
+
+/* Custom buttons */
+.btn {
+  border-radius: 0.4rem;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+}
+
+/* Admin panel styles */
+.admin-panel .table {
+  white-space: nowrap;
+}
+
+/* Flight details */
+.flight-route {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem 0;
+}
+
+.flight-route::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  right: 10%;
+  border-top: 2px dashed #adb5bd;
+  z-index: 0;
+}
+
+.flight-route-point {
+  position: relative;
+  z-index: 1;
+  background-color: white;
+  padding: 0.5rem;
+}
+
+.flight-time {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.flight-city {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero {
+    text-align: center;
+  }
+
+  .flight-route::before {
+    left: 5%;
+    right: 5%;
+  }
+}
+
+/* Ticket card styles */
+.ticket-card {
+  border-left: 5px solid var(--primary-color);
+}
+
+/* Animation for confirmation page */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.confirmation-success-icon {
+  color: var(--success-color);
+  font-size: 4rem;
+  animation: pulse 2s infinite;
+}
+
+/* Footer styles */
+footer {
+  margin-top: auto;
+}
+
+footer a {
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Seat selection styles */
+.seat-map-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.airplane-body {
+  position: relative;
+  background-color: white;
+  border-radius: 20px;
+  padding: 30px 10px;
+}
+
+.airplane-body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 20px;
+  background-color: #b8b8b8;
+  border-radius: 50% 50% 0 0;
+  z-index: 0;
+}
+
+.seat-row {
+  position: relative;
+  z-index: 1;
+}
+
+.seat {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.seat-available {
+  background-color: #a3cfec;
+  color: #004080;
+}
+
+.seat-available:hover {
+  background-color: #7db9e0;
+  transform: scale(1.1);
+}
+
+.seat-booked {
+  background-color: #e0e0e0;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.seat-selected {
+  background-color: #28a745;
+  color: white;
+}
+
+.seat-placeholder {
+  background-color: transparent;
+}
+
+.aisle {
+  width: 20px;
+}
+
+.row-number {
+  font-weight: bold;
+  color: #666;
+  width: 20px;
+  text-align: center;
+}
+
+.seat-label {
+  font-size: 0.7rem;
+  position: absolute;
+  bottom: -15px;
+}
+
+.seat-sample {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  margin-right: 5px;
+  vertical-align: middle;
+}

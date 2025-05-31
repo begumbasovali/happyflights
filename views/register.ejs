@@ -1,0 +1,60 @@
+<% /* Start content */ %>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="card shadow mt-5">
+        <div class="card-header bg-primary text-white">
+          <h3 class="card-title mb-0">
+            <i class="fas fa-user-plus"></i> Register
+          </h3>
+        </div>
+        <div class="card-body">
+          <form id="register-form">
+            <div class="mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input type="text" class="form-control" id="username" required />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" required />
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="confirm-password" class="form-label"
+                >Confirm Password</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="confirm-password"
+                required
+              />
+            </div>
+            <div id="register-error" class="alert alert-danger d-none"></div>
+            <div id="password-match-error" class="alert alert-danger d-none">
+              Passwords don't match. Please try again.
+            </div>
+            <button type="submit" class="btn btn-primary w-100">
+              <i class="fas fa-user-plus"></i> Register
+            </button>
+          </form>
+          <hr />
+          <div class="text-center">
+            <p>Already have an account? <a href="/login">Login here</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/register.js"></script>
+<% /* End content */ %>

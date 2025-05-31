@@ -1,0 +1,101 @@
+<% /* Start content */ %>
+<div class="container">
+  <div class="row mb-4">
+    <div class="col-12">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Flight Details
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-7">
+      <div class="card shadow mb-4">
+        <div class="card-header bg-primary text-white">
+          <h3 class="card-title mb-0">
+            <i class="fas fa-plane-departure"></i> Flight Details
+          </h3>
+        </div>
+        <div class="card-body" id="flight-details-container">
+          <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Loading flight details...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h3 class="card-title mb-0">
+            <i class="fas fa-ticket-alt"></i> Book This Flight
+          </h3>
+        </div>
+        <div class="card-body">
+          <form id="booking-form">
+            <div class="mb-3">
+              <label for="passenger-name" class="form-label">First Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="passenger-name"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="passenger-surname" class="form-label"
+                >Last Name</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="passenger-surname"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="passenger-email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="passenger-email"
+                required
+              />
+            </div>
+            <!-- Seat selection container -->
+            <div id="seat-selection-container">
+              <!-- Will be populated by seat-selector.js -->
+              <!-- Fallback seat input in case seat-selector doesn't load -->
+              <div class="mb-3">
+                <label for="seat-number" class="form-label">Seat Number (Optional)</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="seat-number"
+                  placeholder="Leave empty for automatic assignment"
+                />
+                <div class="form-text">Seat selection map will load here</div>
+              </div>
+            </div>
+            <input type="hidden" id="flight-id" value="<%= flightId %>" />
+            <button type="submit" class="btn btn-primary w-100">
+              <i class="fas fa-check-circle"></i> Book Now
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/seat-selector.js"></script>
+<script src="/js/flight.js"></script>
+<% /* End content */ %>

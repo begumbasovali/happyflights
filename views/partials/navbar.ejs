@@ -1,0 +1,97 @@
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="
+  background: linear-gradient(135deg, rgba(25, 42, 86, 0.95), rgba(13, 27, 62, 0.98));
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  z-index: 1030;
+">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="/" style="color: rgba(255, 255, 255, 0.95);">
+      <i class="fas fa-plane-departure"></i> HappyFlights
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/" id="home-link" style="color: rgba(255, 255, 255, 0.9);" onmouseover="this.style.color='rgba(255, 255, 255, 1)'" onmouseout="this.style.color='rgba(255, 255, 255, 0.9)'">
+            <i class="fas fa-home"></i> Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/my-tickets" id="my-tickets-link" style="color: rgba(255, 255, 255, 0.9);" onmouseover="this.style.color='rgba(255, 255, 255, 1)'" onmouseout="this.style.color='rgba(255, 255, 255, 0.9)'">
+            <i class="fas fa-ticket-alt"></i> My Tickets
+          </a>
+        </li>
+        
+        <!-- Giriş yapmamış kullanıcılar için -->
+        <li class="nav-item user-logged-out">
+          <a class="nav-link" href="/login" id="login-link" style="color: rgba(255, 255, 255, 0.9);" onmouseover="this.style.color='rgba(255, 255, 255, 1)'" onmouseout="this.style.color='rgba(255, 255, 255, 0.9)'">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </a>
+        </li>
+        
+        <!-- Giriş yapmış kullanıcılar için -->
+        <li class="nav-item user-logged-in dropdown d-none">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="userDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            style="color: rgba(255, 255, 255, 0.9);"
+          >
+            <i class="fas fa-user"></i> <span id="username-display"></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="userDropdown" style="background: rgba(25, 42, 86, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
+            <li><a class="dropdown-item" href="/my-tickets" style="color: rgba(255, 255, 255, 0.9);" onmouseover="this.style.color='rgba(255, 255, 255, 1)'" onmouseout="this.style.color='rgba(255, 255, 255, 0.9)'">
+              <i class="fas fa-ticket-alt"></i> My Tickets
+            </a></li>
+            <li><hr class="dropdown-divider" style="border-color: rgba(255, 255, 255, 0.2);" /></li>
+            <li>
+              <a class="dropdown-item" href="#" id="logout-btn" style="color: rgba(255, 255, 255, 0.9);" onmouseover="this.style.color='rgba(255, 255, 255, 1)'" onmouseout="this.style.color='rgba(255, 255, 255, 0.9)'">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+            </li>
+          </ul>
+        </li>
+        
+        <!-- Admin için özel dropdown -->
+        <li class="nav-item admin-logged-in dropdown d-none">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="adminDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            style="color: rgba(255, 255, 255, 0.9);"
+          >
+            <i class="fas fa-user-shield"></i> Admin
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="adminDropdown" style="background: rgba(25, 42, 86, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
+            <li><a class="dropdown-item" href="/admin/panel" style="color: rgba(255, 255, 255, 0.9);" onmouseover="this.style.color='rgba(255, 255, 255, 1)'" onmouseout="this.style.color='rgba(255, 255, 255, 0.9)'">
+              <i class="fas fa-cogs"></i> Admin Panel
+            </a></li>
+            <li><hr class="dropdown-divider" style="border-color: rgba(255, 255, 255, 0.2);" /></li>
+            <li>
+              <a class="dropdown-item" href="#" id="admin-logout-btn" style="color: rgba(255, 255, 255, 0.9);" onmouseover="this.style.color='rgba(255, 255, 255, 1)'" onmouseout="this.style.color='rgba(255, 255, 255, 0.9)'">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
